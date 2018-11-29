@@ -2,4 +2,24 @@
 % Bharat B - 0025
 % Satvik G - 0117
 
-% actual code 
+
+% ***************** Database 1 :: Definition (Grammar) of adapter clauses allowed  *************
+
+adapter(a).
+adapter(b).
+adapter(c). 
+
+
+% *************************** End of Database 1 ************************************************
+
+
+
+
+
+%Comment the following samples after writing databases for each clause.
+ethernet(w).
+ip(e).
+protocol(r).
+
+allow(A,B,C,D) :- adapter(A),ethernet(B),ip(C),protocol(D).
+

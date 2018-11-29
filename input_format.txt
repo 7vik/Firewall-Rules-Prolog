@@ -1,0 +1,8 @@
+Input will be a Prolog term of the form "check(adapter,ethernet,IPv4).", where:-
+
+adapter - This is a letter from A to P, where A to H are accepted, I to P are rejected,if anything else, dropped
+ethernet - 
+
+
+
+
