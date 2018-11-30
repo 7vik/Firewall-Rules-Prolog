@@ -1,3 +1,0 @@
-boy(satvik).
-girl(charvi).
-
