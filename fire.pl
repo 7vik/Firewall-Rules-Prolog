@@ -27,9 +27,9 @@ ip_drop('172.27.18.213'). %****Drop the packet in this case****%
 ip_drop('191.25.22.123'). %****Drop the packet in this case****%
 
 % ***************** Database 5 :: Grammar of tcp source addresses to be blocked and the packet to be rejected ************
-tcp_src(65530).
-tcp_src(53789).
-tcp_src(58779).
+proto_src(65530).
+proto_src(53789).
+proto_src(58779).
 
 % ***************** Database 6 :: Grammar of VLAN identifiers to be blocked and the packet to be rejected ************
 ether_vid(423).
@@ -37,51 +37,39 @@ ether_vid(2134).
 ether_vid(67).
 
 % ***************** Database 7 :: Grammar of tcp destination addresses to be blocked and the packet to be rejected ************
-tcp_dst(55667).
-tcp_dst(57134).
-tcp_dst(62431).
+proto_dst(55667).
+proto_dst(57134).
+proto_dst(62431).
 
 % ***************** Database 8 :: Grammar of icmp types to be blocked and the packet to be rejected/dropped ************
 icmp_port(7).
 icmp_port(3).
 icmp_port_drop(2). %****Drop the packet in this case****%
 
-% ***************** Database 9 :: Grammar of udp source addresses to be blocked and the packet to be rejected ************
-udp_src(1003).
-udp_src(923).
-udp_src(138).
-
-% ***************** Database 10 :: Grammar of udp destination addresses
-% to be blocked and the packet to be rejected ************
-udp_dst(432).
-udp_dst(561).
-udp_dst(587).
 % *************************** End of Databases ****************
 
 
 
 
-
+%use ranges if neededi
 %*******range(X,Y,Z) :- X >= Y, X =< Z.**********
-%********You can try this out to specify ranges!!!*********
-
-%max(X,Y,Max) :- if_then_else(X>Y,Max=X,Max=Y).
 
 
-filter(X) :- reject(X) -> temp(hi); filter2(X).
+
+filter(X) :- reject(X) -> temp(reject); filter2(X).
 filter2(X) :- drop(X) -> temp(bye); accept(X).
 
-%filter([A,B,C,D,E,F,G,H,I,J|_]) :- if_then_else(reject([A,B,C,D,E,F,G,H,I,J|_]),temp(hi),filter2([A,B,C,D,E,F,G,H,I,J|_])).
+temp(reject) :- write("Packet Rejected"),nl.
 
-%filter2([A,B,C,D,E,F,G,H,I,J|_]) :- if_then_else(drop([A,B,C,D,E,F,G,H,I,J|_]),temp(bye),accept([A,B,C,D,E,F,G,H,I,J|_])).
+temp(_) :- write("").
 
-temp(_) :- write("lite"),nl.
+accept([A,B,C,D,E,F,G,H|_]) :- adapter(A),ether_proto(B),\+ether_vid(C),\+ip(D),\+ip_drop(D),proto(E),\+proto_src(F),\+proto_dst(G),\+icmp_port(H),\+icmp_port_drop(H),write("Packet Accepted").
 
-accept([A,B,C,D,E,F,G,H,I,J|_]) :- adapter(A),ether_proto(B),\+ether_vid(C),\+ip(D),proto(E),\+tcp_src(F),\+tcp_dst(G),\+udp_src(H),\+udp_dst(I),\+icmp_port(J),write("Packet Accepted").
+reject([A,B,C,D,E,F,G,H|_]) :-(\+adapter(A);\+ether_proto(B);ether_vid(C);ip(D);\+proto(E);proto_src(F);proto_dst(G);icmp_port(H)),true.
 
-reject([A,B,C,D,E,F,G,H,I,J|_]) :-(\+adapter(A);\+ether_proto(B);ether_vid(C);ip(D);\+proto(E);tcp_src(F);tcp_dst(G);udp_src(H);udp_dst(I);icmp_port(J)),write("Packet Rejected").
+drop([A,B,C,D,E,F,G,H|_])
+:-(\+adapter(A);\+ether_proto(B);ether_vid(C);ip_drop(D);\+proto(E);proto_src(F);proto_dst(G);icmp_port_drop(H)).
 
-drop([A,B,C,D,E,F,G,H,I,J|_]):-(\+adapter(A);\+ether_proto(B);ether_vid(C);ip_drop(D);\+proto(E);tcp_src(F);tcp_dst(G);udp_src(H);udp_dst(I);icmp_port_drop(J)).
 
 
 
