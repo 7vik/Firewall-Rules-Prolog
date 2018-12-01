@@ -27,7 +27,7 @@ swipl Firewall.pl
 
 4. If the database and engine need to be separately loaded, use the following bash command:
 ```bash
-swipl ./database/engine.pl ./database/db.pl
+swipl ./database/engine.pl ./database/database.pl
 ```
 5. Exit SWI Prolog using-
 ```prolog
