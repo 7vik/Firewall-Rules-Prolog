@@ -1,6 +1,0 @@
-Input is a Prolog term of the form "filter(adapter,ethernet,IPv4).", where:-
-
-
-
-
-

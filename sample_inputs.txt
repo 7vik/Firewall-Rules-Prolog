@@ -1,0 +1,46 @@
+Sample input testcases with output--
+
+?- filter([a,0x86dd,3576,'192.23.126.254','TCP',27267,21834,4]).
+Packet Accepted
+true .
+
+?- filter([g,0x0800,356,'192.23.126.254','TCP',7267,2834,6]).
+Packet Accepted
+true .
+
+?- filter([a,0x86dd,576,'192.26.26.254','TCP',27267,21834,6]).
+Packet Accepted
+true .
+
+?- filter([a,0x86dd,576,'192.26.26.250','TCP',27267,21834,2]).
+Packet Rejected
+true .
+
+?- filter([a,0x86dd,576,'192.26.26.250','TCP',27267,21834,6]).
+Packet Rejected
+true .
+
+?- filter([a,0x86dd,3576,'192.26.26.250','TCP',27267,21834,2]).
+Packet Rejected
+true .
+
+?- filter([h,0x0800,3562,'192.23.126.25','TCP',7267,2834,2]).
+Packet Rejected
+true .
+
+?- filter([a,0x0800,2135,'192.23.126.25','TCP',7267,2834,2]).
+true.
+
+?- filter([a,0x86dd,3576,'192.26.26.254','TCP',27267,21834,2]).
+true.
+
+?- filter([a,0x86dd,576,'192.26.26.254','TCP',27267,21834,2]).
+true.
+
+?- filter([a,0x86dd,576,'192.26.26.250','TCP',27267,71834,6]).
+Invalid Packet
+true .
+
+?- filter([a,0x86dd,5376,'192.26.26.254','TCP',27267,21834,2]).
+Invalid Packet
+true .
