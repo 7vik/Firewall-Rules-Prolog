@@ -2,7 +2,7 @@
 ## Objective
  * To apply a set of pre-defined rules on internet packet headers, and
  * To accept, reject, or drop (silently) each packet with a given precedence.
- * Other details are in [Problem Statement](ProblemStatement.pl)
+ * Other details are in [Problem Statement](ProblemStatement.md)
 
 ## Description:
  * Internet packets arrive comprising three parts: a header, the payload (content), and the trailer. A firewall acts as a line of defense for our system, accepting and rejecting data packets based on their headers, using pre-defined rules.
